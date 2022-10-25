@@ -1,0 +1,6 @@
+okay before uploading we will show a preview of the image and a send button which will work same like the message send button to have private messages
+
+2: show a navbar with translate on click of the  account icon
+3: make the site responsive and in mobile devices only render chats and onclick of any chat show the private route to the chat messages
+4: provide each user a unique Id on register.
+5: Add User add option so users can add their freinds and chat in both the user and friend chats should be updated with new friends
