@@ -14,24 +14,29 @@ import GoogleIcon from "@mui/icons-material/Google";
 import Input from "@mui/material/Input";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
-import { auth, storage, db } from "../firebase";
+import { auth, storage, db } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
+import loader from '../../assets/greenLoader.gif'
 
 function Register() {
   const [err, setErr] = useState("");
+  
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // const navigate =useNavigate();
+  const navigate =useNavigate();
   const onSubmit = async (data) => {
     let username = data.username;
     let password = data.password;
     let email = data.email;
     let file = data.pfp ? data.pfp[0] : null;
+    setLoading(true);
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -54,7 +59,7 @@ function Register() {
 
           await setDoc(doc(db, "userChats", res.user.uid), {});
 
-          //  navigate("/");
+           navigate("/");
         });
       });
     } catch (err) {
@@ -75,7 +80,9 @@ function Register() {
             placeat soluta?
           </p>
           <span>Already a member?</span>
-          <button>Login</button>
+          <Link to={'/login'}>
+                      <button>Login</button>
+                      </Link>
         </div>
         <div className="right">
           <h1>Register</h1>
@@ -86,7 +93,7 @@ function Register() {
               name="username"
               {...register("username", { required: true, minLength: 4 })}
             />
-            {errors.username && <p>username must be at least 4 characters</p>}
+            {errors.username && <p  className="error">must be 4 chars</p>}
             <input
               type="email"
               name="email"
@@ -94,6 +101,7 @@ function Register() {
               placeholder="Email"
               {...register("email", { required: true, minLength: 4 })}
             />
+               {errors.email && <p  className="error">invalid email</p>}
             <input
               type="password"
               name="password"
@@ -101,6 +109,7 @@ function Register() {
               placeholder="Password"
               {...register("password", { required: true, minLength: 5 })}
             />
+              {errors.password && <p className="error">password must be 5 chars</p>}
             <label htmlFor="pfp">
               <AddPhotoAlternateIcon
                 sx={{
@@ -117,8 +126,15 @@ function Register() {
               accept="image/*"
             />
 
-            <button>Register</button>
+{
+                              loading?<img src={loader} alt="" className="loader" />:
+                              <button>Register</button>
+
+                            }
+          
           </form>
+
+          <button className="google">Google <GoogleIcon sx={{height:"16px"}}></GoogleIcon></button>
         </div>
       </div>
     </div>

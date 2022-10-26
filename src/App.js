@@ -1,7 +1,7 @@
 import Home from "./pages/Home";
 // import Login from "./pages/Login";
-import Login from "./components/Login";
-import Register from './components/Register';
+import Register from './pages/Register/Register';
+import Login from './pages/Login/Login';
 // import Register from "./pages/Register";
 import { useState,useEffect } from "react";
 import "./style.css"
@@ -54,7 +54,7 @@ function App() {
     }
   return (
     <div>
-      {/* <BrowserRouter>
+      <BrowserRouter>
        <Routes>
 
         <Route path='/' >
@@ -72,11 +72,9 @@ function App() {
         </Route>
        </Routes>
       
-      </BrowserRouter> */}
+      </BrowserRouter>
 
-      <Register>
-
-      </Register>
+     
 
        {/* <div className="upload">
          <input type="file" onChange={(event)=>setImage(event.target.files[0])}/>

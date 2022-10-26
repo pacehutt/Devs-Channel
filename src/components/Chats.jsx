@@ -18,6 +18,7 @@ const Chats = () => {
       unsub();
     };}
 
+    // Because first we need the currentUser
 
     currentUser.uid && getChats();
   }, []);

@@ -1,5 +1,11 @@
-$primary-login-color:rgb(114, 91, 124);
-$opacity-color:rgba(108, 58, 132, 0.498);
+// $primary-login-color:#009da3;
+$opacity-color2:#084840;
+$opacity-color:#0b5e6158;
+$primary-login-color:#178d7f;
+
+$sm: 576px;
+$md: 1092px;
+
 
 .register{
 
@@ -9,6 +15,11 @@ $opacity-color:rgba(108, 58, 132, 0.498);
     display: flex;
     align-items: center;
     justify-content: center;
+    @media screen and (max-width: $sm) {
+   
+        height: auto;
+        // width:90%;
+        }
     .card{
 
         display: flex;
@@ -19,6 +30,25 @@ $opacity-color:rgba(108, 58, 132, 0.498);
         height: 500px;
         overflow: hidden;
         border-radius: 7px;
+        @media screen and (max-width: $md) {
+       
+            height: 90%;
+            width:90%;
+            }
+
+            @media screen and (max-width: $sm) {
+       
+               
+                    width: 90%;
+                    height: 150%;
+                    overflow: scroll;
+                    border-radius: 7px;
+                    top: 25px;
+                    position: absolute;
+                    flex-direction: column;
+            }
+
+        
 
         .left
         {
@@ -32,6 +62,10 @@ $opacity-color:rgba(108, 58, 132, 0.498);
             gap: 35px;
             color: white;
             overflow: hidden;
+            @media screen and (max-width: $sm) {
+                flex: auto;
+             
+             }
             h1{
                      font-size: 50px;
                      line-height: 50px;
@@ -51,6 +85,12 @@ $opacity-color:rgba(108, 58, 132, 0.498);
                       color: $primary-login-color ;
                       cursor: pointer;
                       font-weight: bold;
+                      &:hover
+                      {
+                            background-color: $opacity-color;
+                            transition: all 0.2s ease-in-out;
+                            color: white;
+                      }
             }
            
 
@@ -66,6 +106,12 @@ $opacity-color:rgba(108, 58, 132, 0.498);
             flex: 1;
             background-color: white;
             height: 100%;
+            @media screen and (max-width: $sm) {
+                flex: auto;
+                width: 75%;
+
+             
+             }
             h1{
                 color: #555;
             }
@@ -74,7 +120,7 @@ $opacity-color:rgba(108, 58, 132, 0.498);
                 flex-direction: column;
                 justify-content: center;
                 // align-items: center;
-                gap: 30px;
+                gap: 20px;
                 input{
                     border: none;
                     border-bottom: 2px solid $primary-login-color;
@@ -96,6 +142,13 @@ $opacity-color:rgba(108, 58, 132, 0.498);
                   background-color: $primary-login-color;
                   color: white;
                     cursor: pointer;font-weight: bold;
+                    transition: all 0.2s ease-in-out;
+
+                    &:hover{
+                        background-color: darken($primary-login-color,20%);
+                  color: white;
+
+                    }
                 }
                 #pfp{
                     display: none;
@@ -104,4 +157,37 @@ $opacity-color:rgba(108, 58, 132, 0.498);
 
         }
     }
+    .google{
+        width: 50%;
+        padding: 10px;
+        border: none;
+        background:linear-gradient(-120deg, #4286f442, #34a85337, #fbbd053e, #ea443544);
+        color: black;
+          cursor: pointer;font-weight: bold;
+          transition: all 0.2s ease-in-out;
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          justify-content: center;
+
+          &:hover{
+              background-color: darken($primary-login-color,10%);
+        color: white;
+
+          }
+    }
 }
+
+.error{
+    font-size: 12px;
+}
+
+.loader{
+    height: 23px;
+    width: 23px;
+}
+@media screen and (max-width: $sm) {
+    body{
+        background-color: $primary-login-color;
+    }
+    }
