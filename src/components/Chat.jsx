@@ -1,17 +1,28 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import VideocamIcon from '@mui/icons-material/Videocam';
 import CallIcon from '@mui/icons-material/Call';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Messages from './Messages';
 import Input from "./Input"
+import { AuthContext } from '../context/AuthContext';
+import { ChatContext } from '../context/ChatContext';
 
-const chat = () => {
+const Chat = () => {
+
+   
+  const currentUser = useContext(AuthContext);
+  //  console.log(chat)
+  const {data} =useContext(ChatContext)
+  console.log(data)
+
+
   return (
+
+    currentUser &&
     <div className='chat'>
     <div className="chatInfo">
       <span className="chatName">
-        Jane
+       {data?.user?.displayName}
       </span>
        
        <div className="chatIcons">
@@ -30,4 +41,4 @@ const chat = () => {
   )
 }
 
-export default chat
+export default Chat

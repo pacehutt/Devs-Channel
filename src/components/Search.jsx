@@ -6,8 +6,8 @@ import { AuthContext } from "../context/AuthContext";
 
 const Search = () => {
   const currentUser = useContext(AuthContext);
-  const [userName, setUserName] = useState(null);
-  const [user, setUser] = useState(null)
+  const [userName, setUserName] = useState("");
+  const [user, setUser] = useState("")
   const [err, setErr] = useState(null);
   const [empty, setEmpty] = useState(false);
   const [freindReqMessage, setFreindReqMessage] = useState("Add Friend");
@@ -16,7 +16,7 @@ const Search = () => {
     console.log("add friend")
     setFreindReqMessage("Friend Request Sent")
     // Check whether the yuser chat exxists or not
-    const combinedId= user.uid + currentUser.uid;
+    const combinedId= user.uid > currentUser.uid ? user.uid + currentUser.uid : currentUser.uid+user.uid ;
     try{
       const res = await getDoc(doc(db, "userChats", combinedId))
 
@@ -24,7 +24,7 @@ const Search = () => {
       {
         // create the chat for with the combined id of both users
         await setDoc(doc(db, "chats", combinedId), {
-          users: [user.uid, currentUser.uid],
+        
           messages: [],
         });
 
