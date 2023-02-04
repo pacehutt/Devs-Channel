@@ -9,6 +9,8 @@ import { Timestamp, doc } from "@firebase/firestore";
 import { db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { serverTimestamp } from "@firebase/firestore";
+import DoneIcon from "@mui/icons-material/Done";
+import { Box, Typography } from "@mui/material";
 
 const Input = () => {
   const [text, setText] = useState("");
@@ -69,34 +71,57 @@ const Input = () => {
     setImage(null);
   };
 
+  const handleKey = (e) => e.code === "Enter" && handleSend();
+
   return (
-    <div className="input">
-      <input
-        type="text"
-        className="msg-input"
-        placeholder="Type something.."
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <div className="send">
-        <img src="" alt="" />
+    <>
+      <div className="input">
         <input
-          type="file"
-          style={{ display: "none" }}
-          id="file"
-          accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
+          type="text"
+          className="msg-input"
+          onKeyDown={handleKey}
+          placeholder="Type something.."
+          value={text}
+          onChange={(e) => setText(e.target.value)}
         />
-        <label htmlFor="file">
-          <PhotoCameraIcon sx={{ color: "#494d5b" }}></PhotoCameraIcon>
-        </label>
-        <button onClick={handleSend}>
-          <SendIcon
-            sx={{ color: "#1d90f5", backgroundColor: "transparent" }}
-          ></SendIcon>
-        </button>
+        <div className="send">
+          <img src="" alt="" />
+          <input
+            type="file"
+            style={{ display: "none" }}
+            id="file"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+          <label htmlFor="file">
+            {!image && (
+              <PhotoCameraIcon sx={{ color: "#494d5b" }}></PhotoCameraIcon>
+            )}
+            {image && (
+              <DoneIcon
+                sx={{
+                  color: "#00ed00f6",
+                }}
+              ></DoneIcon>
+            )}
+          </label>
+          <button
+            onClick={handleSend}
+            disabled={text.length === 0 && image === null && text.length === 0}
+          >
+            <SendIcon
+              sx={{
+                color: "#1d90f5",
+                backgroundColor: "transparent",
+                "&:hover": {
+                  color: "#1d9067",
+                },
+              }}
+            ></SendIcon>
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -8,48 +8,92 @@ import { auth, storage, db } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
-import loader from '../../assets/greenLoader.gif'
+import loader from "../../assets/greenLoader.gif";
+import { Typography } from "@mui/material";
+import defaultImage from "../../assets/a.png";
+
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
+import ReactLoading from "react-loading";
 
 function Register() {
   const [err, setErr] = useState("");
-  
+
   const [loading, setLoading] = useState(false);
+
+  const registerUserWithGoogle = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    signInWithGoogle();
+  };
+
+  const provider = new GoogleAuthProvider();
+
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log(result.user.displayName, result.user.email, "user");
+
+        obSubmitGoogle(result.user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const navigate =useNavigate();
+  const navigate = useNavigate();
+
+  const obSubmitGoogle = async (googleData) => {
+    await updateProfile(googleData, {
+      displayName: googleData.displayName.split(" ")[0],
+      photoURL: googleData.photoURL,
+    });
+
+    await setDoc(doc(db, "users", googleData.uid), {
+      uid: googleData.uid,
+      displayName: googleData.displayName.split(" ")[0],
+      email: googleData.email,
+      pfpUrl: googleData.photoURL,
+    });
+
+    await setDoc(doc(db, "userChats", googleData.uid), {});
+
+    navigate("/");
+  };
+
   const onSubmit = async (data) => {
     let username = data.username;
     let password = data.password;
     let email = data.email;
     let file = data.pfp ? data.pfp[0] : null;
+    if (file === undefined) {
+      file = new File([defaultImage], "default.png", { type: "image/png" });
+    }
+
     setLoading(true);
 
     try {
-
-      // const isValidEmail = await fetch(`https://emailvalidation.abstractapi.com/v1/  
-      // ?=${process.env.ABSTRACT_KEY} 
+      // const isValidEmail = await fetch(`https://emailvalidation.abstractapi.com/v1/
+      // ?=${process.env.ABSTRACT_KEY}
       // &email=${email}`);
       // const isValidEmailJson = await isValidEmail.json();
       // if (!isValidEmailJson.deliverability === "DELIVERABLE") {
-      
+
       //   setErr("Please enter a valid email");
       //   setLoading(false);
       //   throw new Error("Please enter a valid email");
-      
+
       // }
-
-      
-
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
       const storageRef = ref(storage, `pfps/${username}`);
       uploadBytes(storageRef, file).then(() => {
         getDownloadURL(storageRef).then(async (downloadURL) => {
-          console.log(downloadURL, "it is downloadURL");
           await updateProfile(res.user, {
             displayName: username,
             photoURL: downloadURL,
@@ -64,15 +108,13 @@ function Register() {
 
           await setDoc(doc(db, "userChats", res.user.uid), {});
 
-           navigate("/");
+          navigate("/");
         });
       });
     } catch (err) {
       setErr(err.message);
       setLoading(false);
     }
-
-    console.log(data);
   };
 
   return (
@@ -86,20 +128,44 @@ function Register() {
             placeat soluta?
           </p>
           <span>Already a member?</span>
-          <Link to={'/login'}>
-                      <button>Login</button>
-                      </Link>
+          <Link to={"/login"}>
+            <button>Login</button>
+          </Link>
         </div>
         <div className="right">
-          <h1>Register</h1>
+          <Typography
+            sx={{
+              fontSize: "15px",
+              letterSpacing: "3px",
+              fontFamily: "Bebas Neue, sans-serif",
+              position: "relative",
+              top: "20px",
+            }}
+          >
+            Welcome to Devs Channel !
+          </Typography>
+          <h2>Register</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
               type="text"
               placeholder="Username"
               name="username"
-              {...register("username", { required: true, minLength: 4 })}
+              {...register("username", {
+                required: true,
+                minLength: 4,
+                maxLength: 10,
+              })}
             />
-            {errors.username && <p  className="error">must be 4 chars</p>}
+            {errors.username && (
+              <p
+                className="error"
+                style={{
+                  fontSize: "10px",
+                }}
+              >
+                4-10 characters only
+              </p>
+            )}
             <input
               type="email"
               name="email"
@@ -107,8 +173,17 @@ function Register() {
               placeholder="Email"
               {...register("email", { required: true, minLength: 4 })}
             />
-               {(errors.email || err) && <p  className="error">invalid email</p>}
-              
+            {(errors.email || err) && (
+              <p
+                className="error"
+                style={{
+                  fontSize: "10px",
+                }}
+              >
+                invalid email
+              </p>
+            )}
+
             <input
               type="password"
               name="password"
@@ -116,7 +191,16 @@ function Register() {
               placeholder="Password"
               {...register("password", { required: true, minLength: 5 })}
             />
-              {errors.password && <p className="error">password must be 5 chars</p>}
+            {errors.password && (
+              <p
+                className="error"
+                style={{
+                  fontSize: "10px",
+                }}
+              >
+                password must be 5 chars
+              </p>
+            )}
             <label htmlFor="pfp">
               <AddPhotoAlternateIcon
                 sx={{
@@ -131,16 +215,34 @@ function Register() {
               id="pfp"
               {...register("pfp")}
               accept="image/*"
+              {...register("pfp", { required: true })}
             />
+            {(errors.email || err) && (
+              <p
+                className="error"
+                style={{
+                  fontSize: "10px",
+                }}
+              >
+                please select a profile pic
+              </p>
+            )}
 
-{                 loading ? <img src={loader} alt="" className="loader" />:
-                              <button>Register</button>
-
-                            }
-          
+            {loading ? (
+              <ReactLoading
+                type={"bubbles"}
+                color={"gray"}
+                height={"20%"}
+                width={"20%"}
+              />
+            ) : (
+              <button>Register</button>
+            )}
           </form>
 
-          <button className="google">Google <GoogleIcon sx={{height:"16px"}}></GoogleIcon></button>
+          <button className="google" onClick={registerUserWithGoogle}>
+            Google <GoogleIcon sx={{ height: "16px" }}></GoogleIcon>
+          </button>
         </div>
       </div>
     </div>

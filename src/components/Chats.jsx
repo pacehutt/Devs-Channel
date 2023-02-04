@@ -5,6 +5,9 @@ import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { db } from "../firebase";
 
+import ReactLoading from "react-loading";
+import { Box, Typography } from "@mui/material";
+
 const Chats = () => {
   const [chats, setChats] = useState(null);
   const currentUser = useContext(AuthContext);
@@ -12,7 +15,6 @@ const Chats = () => {
   const navigate = useNavigate();
 
   const handleSelect = (chatId, user) => {
-    console.log(chatId, user);
     dispatch({ type: "SET_USER", payload: { user, chatId } });
     navigate("/chat");
   };
@@ -23,7 +25,7 @@ const Chats = () => {
         if (doc.exists()) setChats(Object.entries(doc.data()));
       });
 
-      console.log("chats", chats);
+      // console.log("chats", chats);
 
       return () => {
         unsub();
@@ -38,7 +40,30 @@ const Chats = () => {
   return (
     <div className="chats">
       <div className="usersChat">
-        {!chats && <p>loading...</p>}
+        {chats?.length === 0 && (
+          <Box width={"100%"} margin="1rem 0">
+            <Typography textAlign={"center"} fontSize={"12px"} color="white">
+              please add users by their Usernames
+            </Typography>
+          </Box>
+        )}
+        {!chats && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <ReactLoading
+              type={"cylon"}
+              color={"gray"}
+              height={"30px"}
+              width={"70px"}
+            />
+          </Box>
+        )}
 
         {chats &&
           chats
@@ -61,13 +86,12 @@ const Chats = () => {
                       fontSize: "12px",
                     }}
                   >
-                    {(!chat[1].lastMessage
-                      ? "New Chat"
-                      : chat[1].lastMessage?.senderId === currentUser.uid
-                      ? "You: "
-                      : "") +
-                      chat[1].lastMessage?.text.slice(0, 20) +
-                      "..."}
+                    {!chat[1].lastMessage ? "New Chat" : ""}
+                    {chat[1].lastMessage?.senderId === currentUser.uid &&
+                      "You: "}
+                    {chat[1].lastMessage
+                      ? chat[1].lastMessage.text.slice(0, 20) + " ..."
+                      : ""}
                   </span>
                 </div>
                 <span

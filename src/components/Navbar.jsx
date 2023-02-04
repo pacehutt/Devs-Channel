@@ -6,6 +6,7 @@ import "./Navbar.scss";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import HomeIcon from "@mui/icons-material/Home";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -14,13 +15,13 @@ const Navbar = () => {
   return (
     <>
       <div className="navbar">
-        <span className="logo">Dev's Channel</span>
+        <span className="logo">Devs Channel</span>
         <div className="user" onClick={() => setOpen((prev) => !prev)}>
           <span className="name">{currentUser.displayName}</span>
           <img
             src={
               currentUser?.photoURL ||
-              "https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png"
+              "https://previews.123rf.com/images/blankstock/blankstock1903/blankstock190302593/124721850-user-line-icon-profile-avatar-sign-person-silhouette-symbol-geometric-shapes-random-cross-elements-l.jpg"
             }
             alt=""
           />
@@ -30,11 +31,26 @@ const Navbar = () => {
         <div className="nav-options">
           <ul>
             <li>
-              <HomeIcon fontSize="14px"></HomeIcon>Home
+              <HomeIcon fontSize="14px"></HomeIcon>
+              <Link
+                to={"/"}
+                style={{
+                  width: "100%",
+                }}
+              >
+                Home
+              </Link>
             </li>
             <li>
               <AccountBoxIcon fontSize="14px" />
-              Profile
+              <Link
+                to={"/profile"}
+                style={{
+                  width: "100%",
+                }}
+              >
+                Profile
+              </Link>
             </li>
             <li onClick={() => signOut(auth)}>
               {" "}

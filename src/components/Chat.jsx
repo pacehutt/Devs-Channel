@@ -16,7 +16,6 @@ const Chat = () => {
 
   const navigate = useNavigate();
   const { data } = useContext(ChatContext);
-  console.log(data);
 
   return (
     currentUser && (

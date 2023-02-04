@@ -15,13 +15,14 @@ import { upload } from "@testing-library/user-event/dist/upload";
 import Sidebar from "./components/Sidebar";
 import Chat from "./components/Chat";
 import { Box } from "@mui/material";
+import Profile from "./pages/Profile";
+import DefaultPage from "./pages/Default";
 
 function App() {
   const currentUser = useContext(AuthContext);
-  console.log(1, currentUser, 2);
 
   const ProtectedRoute = ({ children }) => {
-    if (!currentUser) return <Navigate to="/login" />;
+    if (!currentUser) return <Navigate to="/welcome" />;
     else return children;
   };
 
@@ -30,9 +31,7 @@ function App() {
     if (Image) {
       const imageRef = ref(storage, `images/${Image.name}`);
 
-      uploadBytes(imageRef, Image).then((snapshot) => {
-        console.log("Uploaded");
-      });
+      uploadBytes(imageRef, Image).then((snapshot) => {});
     }
   };
   return (
@@ -110,7 +109,9 @@ function App() {
               }
             />
             <Route path="login" element={<Login />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="register" element={<Register />} />
+            <Route path="/welcome" element={<DefaultPage />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

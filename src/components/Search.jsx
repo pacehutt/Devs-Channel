@@ -14,6 +14,8 @@ import { db } from "../firebase";
 
 import { AuthContext } from "../context/AuthContext";
 
+import SearchIcon from "@mui/icons-material/Search";
+
 const Search = () => {
   const currentUser = useContext(AuthContext);
   const [userName, setUserName] = useState("");
@@ -22,7 +24,6 @@ const Search = () => {
   const [empty, setEmpty] = useState(false);
   const [freindReqMessage, setFreindReqMessage] = useState("Add Friend");
   const addfriend = async () => {
-    console.log("add friend");
     setFreindReqMessage("Friend Request Sent");
     // Check whether the yuser chat exxists or not
     const combinedId =
@@ -38,10 +39,6 @@ const Search = () => {
           messages: [],
         });
 
-        console.log(currentUser.uid, "current user id");
-        console.log(user.uid, "user id");
-
-        console.log("currentUser", currentUser);
         await updateDoc(doc(db, "userChats", currentUser.uid), {
           [combinedId + ".friendInfo"]: {
             uid: user.uid,
@@ -59,14 +56,11 @@ const Search = () => {
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
-
-        console.log("creating user in other side also", 2, user.uid);
       }
 
       setUser(null);
       setUserName("");
     } catch (err) {
-      console.log("inside catch block");
       console.log(err);
     }
   };
@@ -78,7 +72,6 @@ const Search = () => {
       );
 
       const querySnapshot = await getDocs(q);
-      console.log(querySnapshot);
       if (querySnapshot.empty) {
         setEmpty(true);
         setErr("No user found");
@@ -86,7 +79,6 @@ const Search = () => {
       }
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
         setUser(doc.data());
       });
     } catch (err) {
@@ -105,6 +97,13 @@ const Search = () => {
           placeholder="Search users"
           value={userName}
         />
+        <button onClick={searchUser}>
+          <SearchIcon
+            sx={{
+              color: "#ffffff8e",
+            }}
+          ></SearchIcon>
+        </button>
       </div>
       {err && (
         <div

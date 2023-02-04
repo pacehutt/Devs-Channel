@@ -1,177 +1,179 @@
-$primary-login-color:#bc8dd0;
-$opacity-color:rgba(108, 58, 132, 0.498);
+$primary-login-color: #414555;
+$opacity-color: #243b5597;
 $sm: 576px;
 $md: 1092px;
 
-.login{
+.login {
+  height: 100vh;
+  background-color: $primary-login-color;
+  background: #141e30;
+  background: -webkit-linear-gradient(to right, #243b55, #141e30);
+  background: linear-gradient(to right, #243b55, #141e30);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media screen and (max-width: $sm) {
+    height: auto;
+    // width:90%;
+  }
 
-
-    height: 100vh;
-    background-color: $primary-login-color;
+  .card {
     display: flex;
-    align-items: center;
     justify-content: center;
-    @media screen and (max-width: $sm) {
-   
-        height: auto;
-        // width:90%;
-        }
-
-    .card{
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50%;
-        height: 500px;
-        overflow: hidden;
-        border-radius: 7px;
-        @media screen and (max-width: $md) {
-       
-            height: 90%;
-            width:90%;
-            }
-
-            @media screen and (max-width: $sm) {
-       
-               
-                    width: 90%;
-                    height: 150%;
-                    overflow: scroll;
-                    border-radius: 7px;
-                    top: 25px;
-                    position: absolute;
-                    flex-direction: column;
-            }
-
-        .left
-        {
-            height: 100%;
-            background:linear-gradient($opacity-color,$opacity-color), url('https://images.unsplash.com/photo-1664574654700-75f1c1fad74e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80') no-repeat center center/cover;
-            flex: 1;
-            padding: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 35px;
-            color: white;
-            overflow: hidden;
-
-            @media screen and (max-width: $sm) {
-                   flex: auto;
-                
-                }
-            h1{
-                     font-size: 50px;
-                     line-height: 50px;
-            }
-            p{
-
-            }
-            span{
-                      font-size: 13.5px;
-            }
-
-            button{
-                      width: 50%;
-                      padding: 10px;
-                      border: none;
-                      background-color: white;
-                      color: $primary-login-color ;
-                      cursor: pointer;
-                      font-weight: bold;
-                      &:hover
-                      {
-                            background-color: $opacity-color;
-                            transition: all 0.2s ease-in-out;
-                            color: white;
-                      }
-            }
-
-        }
-        .right
-        {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            // align-items: center;
-            gap:20px;
-            padding: 50px;
-            flex: 1;
-            background-color: white;
-            height: 100%;
-            @media screen and (max-width: $sm) {
-                flex: auto;
-                width: 75%;
-
-             
-             }
-            h1{
-                color: #555;
-            }
-            form{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                // align-items: center;
-                gap: 30px;
-                input{
-                    border: none;
-                    border-bottom: 2px solid $primary-login-color;
-                    padding:15px 10px;
-                    outline: none;
-                }
-                
-                button{
-                  width: 50%;
-                  padding: 10px;
-                  border: none;
-                  background-color: $primary-login-color;
-                  color: white;
-                  transition: all 0.2s ease-in-out;
-                    cursor: pointer;font-weight: bold;
-                    &:hover{
-                        background-color: darken($primary-login-color,20%);
-                  color: white;
-                    }
-                }
-            }
-
-        }
+    align-items: center;
+    width: 50%;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 7px;
+    @media screen and (max-width: $md) {
+      height: 90%;
+      width: 90%;
     }
-    .google{
+
+    @media screen and (max-width: $sm) {
+      width: 90%;
+      height: 100%;
+      overflow: scroll;
+      border-radius: 7px;
+      top: 25px;
+      position: absolute;
+      flex-direction: column;
+    }
+
+    .left {
+      height: 100%;
+      background: linear-gradient($opacity-color, $opacity-color),
+        url("https://images.unsplash.com/photo-1664574654700-75f1c1fad74e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80")
+          no-repeat center center/cover;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 35px;
+      width: 100%;
+      padding: 60px;
+      color: white;
+      overflow: hidden;
+
+      @media screen and (max-width: $sm) {
+        flex: auto;
+        display: none;
+      }
+      h1 {
+        font-size: 50px;
+        line-height: 50px;
+      }
+      p {
+      }
+      span {
+        font-size: 13.5px;
+      }
+
+      button {
         width: 50%;
         padding: 10px;
         border: none;
-        background:linear-gradient(-120deg, #4286f442, #34a85337, #fbbd053e, #ea443544);
-        background-color: darken($primary-login-color,10%);
-        color: white;
-          cursor: pointer;font-weight: bold;
+        background-color: white;
+        color: $primary-login-color;
+        cursor: pointer;
+        font-weight: bold;
+        &:hover {
+          background-color: $opacity-color;
           transition: all 0.2s ease-in-out;
-          display: flex;
-          align-items: center;
-          font-size: 16px;
-          justify-content: center;
-
-          &:hover{
-              background-color: lighten($primary-login-color,20%);
-        color: gray;
-
-          }
+          color: white;
+        }
+      }
     }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      // align-items: center;
+      gap: 20px;
+      padding: 50px;
+      flex: 1;
+      background-color: white;
+      height: 100%;
+      @media screen and (max-width: $sm) {
+        flex: auto;
+        width: 75%;
+
+        border-radius: 10px;
+        opacity: 0.9;
+      }
+      h1 {
+        color: #555;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        // align-items: center;
+        gap: 30px;
+        input {
+          border: none;
+          border-bottom: 2px solid $primary-login-color;
+          padding: 15px 10px;
+          outline: none;
+        }
+
+        button {
+          width: 50%;
+          padding: 10px;
+          border: none;
+          background-color: $primary-login-color;
+          color: white;
+          transition: all 0.2s ease-in-out;
+          cursor: pointer;
+          font-weight: bold;
+          &:hover {
+            background-color: darken($primary-login-color, 20%);
+            color: white;
+          }
+        }
+      }
+    }
+  }
+  .google {
+    width: 50%;
+    padding: 10px;
+    border: none;
+    background: linear-gradient(
+      -120deg,
+      #4286f442,
+      #34a85337,
+      #fbbd053e,
+      #ea443544
+    );
+    background-color: darken($primary-login-color, 10%);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    justify-content: center;
+
+    &:hover {
+      background-color: lighten($primary-login-color, 20%);
+      color: white;
+    }
+  }
 }
 
-.error{
-    font-size: 12px;
+.error {
+  font-size: 12px;
 }
 
-.loader{
-    height: 23px;
-    width: 23px;
+.loader {
+  height: 23px;
+  width: 23px;
 }
 
 @media screen and (max-width: $sm) {
-    body{
-        background-color: $primary-login-color;
-    }
-    }
+  body {
+    background-color: $primary-login-color;
+  }
+}

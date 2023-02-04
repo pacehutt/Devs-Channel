@@ -1,14 +1,13 @@
-$secondary-color: #414555;
-$primary-color: #272a37;
+$secondary-color: #1c273a;
+$primary-color: #141e30;
 $other-color: white;
-$blurColor: #c6c6c6;
+$blurColor: rgb(244, 244, 244);
 $friendColor: #494d5b;
 $userColor: #1d90f5;
 
 .navbar {
   display: flex;
-
-  height: 30px;
+  height: 35px;
   align-items: center;
   justify-content: space-between;
   padding: 10px;
@@ -72,6 +71,10 @@ $userColor: #1d90f5;
     justify-content: flex-start;
     align-items: center;
     gap: 5px;
+    a {
+      text-decoration: none;
+      color: $other-color;
+    }
 
     &:hover {
       background-color: lighten($secondary-color, 30%);
