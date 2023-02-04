@@ -1,290 +1,231 @@
-$secondary-color: #F56A4D;
-$primary-color: #FEEFEC;
-$other-color:rgb(24, 24, 24);
+$secondary-color: #414555;
+$primary-color: #272a37;
+$other-color: white;
 $blurColor: rgb(244, 244, 244);
+$friendColor: #494d5b;
+$userColor: #1d90f5;
 
-
-.home{
+.home {
   background-color: $primary-color;
   height: 100vh;
   display: flex;
-    justify-content: center;
-    align-items: center;
-   
-    .container
-    {
-        // border: 2px solid red;
-        border-radius: 15px;
-        width: 90%;
-        height: 90%;
+  justify-content: center;
+  align-items: center;
+  color: "white";
+  .container {
+    // border: 2px solid red;
+    border-radius: 15px;
+    width: 90%;
+    height: 90%;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .sidebar {
+    flex: 1;
+    border-right: 2px solid darken($secondary-color, 30%);
+
+    .search {
+      width: 100%;
+      border-bottom: 2px solid darken($primary-color, 30%);
+      .searchForm {
+        input {
+          width: 90%;
+          border: none;
+          background: rgba(0, 0, 0, 0);
+          padding: 13px 10px;
+          margin-bottom: 13px;
+          font-size: 14px;
+          border-bottom: 1px solid gray;
+          color: white;
+          outline: none;
+
+          &::placeholder {
+            color: $other-color;
+          }
+        }
+      }
+    }
+
+    .usersChat {
+      .user {
+        height: 100%;
         display: flex;
-        overflow: hidden;
-
-    } 
-
-    .sidebar{
-      flex: 1;
-      border-right: 2px solid darken($secondary-color, 30%);
-
-      .navbar{
-        display: flex;
-     
-        height: 30px;
         align-items: center;
-        justify-content: space-between;
+        // justify-content:space-between;
+        gap: 10px;
         padding: 10px;
-        background-color: $blurColor;
-        .logo{
-          font-weight:bolder;
-
-        }
-        
-        
-        .user
-        {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-
-          img{
-            width: 30px;
-            height: 30px;
-            background: white;
-            border-radius: 50%;
-            object-fit: cover;
-            
-          }
-        }
-       
-       
-      }
-      .nav-options 
-      {
-        // height: 100vh;
-        height: 100px;
-        background: rgb(176, 176, 176);
-        // transform: translate(0%,0%);
-        width: 50%;
-        transition: all 0.2s ease;
-        // display: none;
-        display: block;
-        backdrop-filter: blur(30px);
-     
-      }
-     
-      .search{
-        width: 100%;
-        border-bottom: 2px solid darken($primary-color, 30%);
-        .searchForm{
-           
-          input{
-            width: 90%;
-            border: none;
-            background: rgba(0,0,0,0);
-            padding: 13px 10px;
-            margin-bottom: 13px;
-            font-size: 14px;
-            border-bottom: 1px solid gray;
-            color: #181818;
-            outline: none;
-
-            &::placeholder{
-              color: $other-color;
-            }
-          }
-        }
-      }
-
-      .usersChat
-      {
-        
-
-
-    .user{
-
-      height: 100%;
-      display: flex;
-      align-items: center;
-      // justify-content:space-between;
-      gap: 10px;
-      padding: 10px;
-        img{
+        color: white !important;
+        img {
           height: 50px;
           width: 50px;
           border-radius: 50%;
           object-fit: cover;
-
         }
-        .userChatInfo{
+        .userChatInfo {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
           height: 100%;
 
-          .userName{
-            font-size: 16px;
+          .userName {
+            font-size: 14px;
             font-weight: bold;
             color: $other-color;
           }
-          .time{
+          .time {
             font-size: 12px;
           }
-         
-          }
+        }
 
-          &:hover{
-            background-color: lighten($secondary-color, 30%);
-            cursor: pointer;
-            transition: all 0.2s ease;
-          }
+        &:hover {
+          background-color: lighten($secondary-color, 30%);
+          cursor: pointer;
+          transition: all 0.2s ease;
         }
       }
-      }
-      .chats{
+    }
+  }
+  .chats {
+    .userChatInfo {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+  .time {
+    font-size: 12px;
+  }
+}
+.chat {
+  flex: 2;
+  .chatImage {
+    height: 30px;
+    width: 30px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
 
+      border-radius: 15px;
+    }
+  }
 
-      
-      .userChatInfo
-      {
+  .chatInfo {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    height: 30px;
+    align-items: center;
+    background-color: $primary-color;
+    color: $other-color;
+    .chatIcons {
+      display: flex;
+      gap: 5px;
+      color: $other-color;
+    }
+  }
+  .messages {
+    background-color: lighten($primary-color, 8%);
+    padding: 10px;
+    height: calc(100% - 120px);
+    overflow-y: scroll;
+    padding: 0 1rem;
+    padding-top: 1rem;
+    .message {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.45rem;
+
+      .messageInfo {
         display: flex;
-        justify-content: space-between;
-        width: 100%;
+        flex-direction: column;
+        span {
+          font-size: 12px;
+          color: grey;
+        }
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
       }
-
-    }
-     .time
-     {
-      font-size: 13px;
-     }
-    }
-    .chat{
-      flex: 2;
-
-      .chatInfo{
+      .messageContent {
         display: flex;
-        justify-content: space-between;
-        padding: 10px;
-        height: 30px;
-        align-items: center;
-        background-color: $blurColor;
-        
-
-        .chatIcons
-        {
-         display: flex;
-         gap:5px;
+        //  max-width: 50%;
+        max-width: 50%;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+        p {
+          background-color: $friendColor;
+          padding: 10px;
+          border-radius: 0 10px 10px 10px;
+          font-size: 14px;
+          color: $other-color;
+          word-wrap: break-word;
+          width: inherit;
         }
-
+        //  max-width: fit-content;
+        img {
+          width: 80%;
+          border-radius: 8px;
+          object-fit: cover;
+          box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        }
       }
-      .messages{
-        background-color: lighten($secondary-color, 30%);
-        padding: 10px;
-        height: calc(100% - 120px);
-        overflow-y: scroll;
+      &.owner {
+        flex-direction: row-reverse;
 
-        .message{
-          display: flex;
-          gap:10px;
-          margin-bottom: 1.45rem;
-          
-          .messageInfo
-          {
-              display: flex;
-              flex-direction: column;
-              span{
-                font-size: 12px;
-                color: grey;
-              }
-              img
-              {
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                object-fit: cover;
-              }
-
-
-          }
-          .messageContent
-          {
-                 display: flex;
-                //  max-width: 50%;
-                 width: 70%;
-                 align-items: flex-start;
-                 flex-direction: column;
-                 gap: 10px;
-                 p{
-                    background-color: white;
-                    padding: 10px;
-                    border-radius: 0 10px 10px 10px;
-                    font-size: 14px;
-                    color: $other-color;
-                    word-wrap: break-word;
-                    width: inherit;
-                 }
-                //  max-width: fit-content;
-                 img{
-                  width: 50%;
-                 }
-          }
-          &.owner
-          {
-            flex-direction: row-reverse;
-
-            .messageContent{
-              align-items: flex-end;
-            }
-            p{
-              background-color: $secondary-color;
-              color: white;
-              border-radius: 10px 0px 10px 10px;
-            }
-          }
+        .messageContent {
+          align-items: flex-end;
         }
-
-      }
-      .input
-      {
-        background-color:  darken($primary-color, 5%);
-        height: 30px;
-        padding: 10px;
-        display:flex;
-        align-items: center;
-        justify-content: space-between;
-        input{
-          width: 100%;
-          border: none;
-        background: transparent;
-          outline: none;
-
-          &::placeholder{
-            color: $other-color;
-          }
-        }
-        .msg-input
-        {
-         width: 100%;
-        }
-        .send{
-          display:flex;
-          align-items: center;
-          gap: 10px;
-          label
-          {
-            cursor: pointer;
-          }
-          
-          button{
-            background-color: $primary-color;
-           
-            border-radius: 7px;
-            outline: none;
-            border: none;
-            cursor: pointer; 
-          }
-
+        p {
+          background-color: $userColor;
+          color: white;
+          border-radius: 10px 0px 10px 10px;
         }
       }
     }
+  }
+  .input {
+    background-color: darken($primary-color, 5%);
+    height: 30px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      outline: none;
+      color: $other-color;
 
+      &::placeholder {
+        color: $other-color;
+      }
+    }
+    .msg-input {
+      width: 100%;
+    }
+    .send {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      label {
+        cursor: pointer;
+      }
+
+      button {
+        background-color: $primary-color;
+
+        border-radius: 7px;
+        outline: none;
+        border: none;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,18 +1,8 @@
 import "./Register.scss";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import React, { useState } from "react";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import styled from "@emotion/styled";
-import TextField from "@mui/material/TextField";
-import KeyIcon from "@mui/icons-material/Key";
-import PersonIcon from "@mui/icons-material/Person";
 import { useForm } from "react-hook-form";
 import GoogleIcon from "@mui/icons-material/Google";
-import Input from "@mui/material/Input";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
 import { auth, storage, db } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -39,6 +29,21 @@ function Register() {
     setLoading(true);
 
     try {
+
+      // const isValidEmail = await fetch(`https://emailvalidation.abstractapi.com/v1/  
+      // ?=${process.env.ABSTRACT_KEY} 
+      // &email=${email}`);
+      // const isValidEmailJson = await isValidEmail.json();
+      // if (!isValidEmailJson.deliverability === "DELIVERABLE") {
+      
+      //   setErr("Please enter a valid email");
+      //   setLoading(false);
+      //   throw new Error("Please enter a valid email");
+      
+      // }
+
+      
+
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
       const storageRef = ref(storage, `pfps/${username}`);
@@ -64,6 +69,7 @@ function Register() {
       });
     } catch (err) {
       setErr(err.message);
+      setLoading(false);
     }
 
     console.log(data);
@@ -101,7 +107,8 @@ function Register() {
               placeholder="Email"
               {...register("email", { required: true, minLength: 4 })}
             />
-               {errors.email && <p  className="error">invalid email</p>}
+               {(errors.email || err) && <p  className="error">invalid email</p>}
+              
             <input
               type="password"
               name="password"
@@ -126,8 +133,7 @@ function Register() {
               accept="image/*"
             />
 
-{
-                              loading?<img src={loader} alt="" className="loader" />:
+{                 loading ? <img src={loader} alt="" className="loader" />:
                               <button>Register</button>
 
                             }

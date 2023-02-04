@@ -1,0 +1,81 @@
+$secondary-color: #414555;
+$primary-color: #272a37;
+$other-color: white;
+$blurColor: #c6c6c6;
+$friendColor: #494d5b;
+$userColor: #1d90f5;
+
+.navbar {
+  display: flex;
+
+  height: 30px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: $primary-color;
+  color: $other-color;
+  .logo {
+    font-weight: bolder;
+    color: $userColor;
+    font-size: 20px;
+    letter-spacing: 0.2rem;
+    font-family: "Bebas Neue", cursive;
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    img {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+}
+
+.nav-options {
+  // height: 100vh;
+  // height: 100px;
+  // transform: translate(0%,0%);
+  width: 50%;
+  transition: all 0.2s ease;
+  color: $other-color;
+  // display: none;
+  display: block;
+  position: relative;
+  backdrop-filter: blur(30px);
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding: 10px;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+
+    background: $secondary-color;
+  }
+  li {
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+
+    &:hover {
+      background-color: lighten($secondary-color, 30%);
+      transition: all 0.2s ease;
+    }
+  }
+}
