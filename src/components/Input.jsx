@@ -113,9 +113,6 @@ const Input = () => {
               sx={{
                 color: "#1d90f5",
                 backgroundColor: "transparent",
-                "&:hover": {
-                  color: "#1d9067",
-                },
               }}
             ></SendIcon>
           </button>

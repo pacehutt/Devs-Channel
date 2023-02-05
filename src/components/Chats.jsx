@@ -98,6 +98,7 @@ const Chats = () => {
                   className="time"
                   style={{
                     fontSize: "12px",
+                    textAlign: "center",
                   }}
                 >
                   {chat[1]?.date?.toDate().toLocaleTimeString([], {

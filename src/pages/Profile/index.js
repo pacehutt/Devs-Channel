@@ -141,7 +141,7 @@ const Profile = () => {
               }}
             />
             <Typography variant="button" color={"white"} fontSize={"16px"}>
-              Profile
+              My Profile
             </Typography>
           </Box>
 

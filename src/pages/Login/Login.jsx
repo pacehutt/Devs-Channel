@@ -75,9 +75,8 @@ function Login() {
         <div className="left">
           <h1>Greetings Dev</h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
-            earum tempora quis illo saepe accusamus similique molestiae, magni
-            placeat soluta?
+            Welcome back to Devs Channel, the hub for developers. Connect with
+            fellow coders, share your knowledge, and expand your network.
           </p>
           <span>Don't have an account?</span>
           <Link to={"/register"}>

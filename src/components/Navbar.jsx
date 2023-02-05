@@ -49,7 +49,7 @@ const Navbar = () => {
                   width: "100%",
                 }}
               >
-                Profile
+                My Profile
               </Link>
             </li>
             <li onClick={() => signOut(auth)}>
