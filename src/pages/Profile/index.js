@@ -6,10 +6,12 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Fade,
   Grid,
+  Modal,
   Typography,
 } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "../../components/Navbar";
 
 import { auth, db } from "../../firebase";
@@ -22,6 +24,10 @@ import Slide from "@mui/material/Slide";
 
 import { deleteDoc, doc } from "firebase/firestore";
 
+import Backdrop from "@mui/material/Backdrop";
+
+import ReactLoading from "react-loading";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -32,6 +38,8 @@ const Profile = () => {
   const currentUser = useContext(AuthContext);
 
   const [open, setOpen] = React.useState(false);
+
+  const [deleting, setDeleting] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,16 +58,18 @@ const Profile = () => {
     //   .catch((err) => {
     //     console.log(err);
     //   });
-
+    setDeleting(true);
     deleteDoc(doc(db, "users", auth.currentUser.uid))
       .then(() => {
         auth.currentUser
           .delete()
           .then(() => {
             navigate("/login");
+            setDeleting(false);
           })
           .catch((err) => {
             console.log(err);
+            setDeleting(false);
           });
       })
       .catch((err) => {
@@ -67,8 +77,57 @@ const Profile = () => {
       });
   };
 
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: {
+      xs: "65%%",
+      sm: "65%",
+      md: "40%",
+    },
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "10px",
+
+    background: "#141E30",
+    background: "-webkit-linear-gradient(to right, #243B55, #141E30)",
+    background: "linear-gradient(to right, #243B55, #141E30)",
+    color: "white",
+    boxShadow: 24,
+    border: "none",
+    outline: "none",
+    p: 5,
+  };
+
   return (
     <div className="home">
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={deleting}
+        // onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={deleting}>
+          <Box sx={style}>
+            <Typography>Please Wait...</Typography>
+            <ReactLoading
+              type={"cylon"}
+              color={"darkGray"}
+              height={"40px"}
+              width={"70px"}
+            />
+          </Box>
+        </Fade>
+      </Modal>
       <Dialog
         open={open}
         TransitionComponent={Transition}
