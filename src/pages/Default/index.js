@@ -6,15 +6,24 @@ import { TypeAnimation } from "react-type-animation";
 import { useNavigate } from "react-router-dom";
 
 import ReactLoading from "react-loading";
+import { animated, useSpring } from "@react-spring/web";
 
 const DefaultPage = () => {
   const navigate = useNavigate();
   const [load, setLoad] = useState(true);
 
+  const [isVisible, setIsVisible] = useState(false);
+
+  const styles = useSpring({
+    opacity: isVisible ? 1 : 0,
+    y: isVisible ? 0 : 24,
+  });
+
   useEffect(() => {
     setTimeout(() => {
       setLoad(false);
-    }, 2000);
+      setIsVisible(true);
+    }, 1000);
   }, []);
 
   return (
@@ -149,52 +158,53 @@ const DefaultPage = () => {
               />
             </Box>
           </Box>
+          <animated.div style={styles}>
+            <Grid
+              spacing={2}
+              container
+              // justifyContent={"center"}
+              // alignItems={"center"}
 
-          <Grid
-            spacing={2}
-            container
-            // justifyContent={"center"}
-            // alignItems={"center"}
-
-            sx={{
-              padding: {
-                xs: "0",
-                sm: "0",
-                md: " 0 32rem",
-              },
-            }}
-          >
-            <Grid item xs={12} sm={12} md={6}>
-              <Button
-                variant="contained"
-                fullWidth
-                sx={{
-                  background: "#272a37",
-                  "&:hover": {
-                    background: "transparent",
-                  },
-                }}
-                onClick={() => navigate("/login")}
-              >
-                Login
-              </Button>
+              sx={{
+                padding: {
+                  xs: "0",
+                  sm: "0",
+                  md: " 0 32rem",
+                },
+              }}
+            >
+              <Grid item xs={12} sm={12} md={6}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  sx={{
+                    background: "#272a37",
+                    "&:hover": {
+                      background: "transparent",
+                    },
+                  }}
+                  onClick={() => navigate("/login")}
+                >
+                  Login
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  sx={{
+                    background: "#414555",
+                    "&:hover": {
+                      background: "transparent",
+                    },
+                  }}
+                  onClick={() => navigate("/register")}
+                >
+                  Register
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <Button
-                variant="contained"
-                fullWidth
-                sx={{
-                  background: "#414555",
-                  "&:hover": {
-                    background: "transparent",
-                  },
-                }}
-                onClick={() => navigate("/register")}
-              >
-                Register
-              </Button>
-            </Grid>
-          </Grid>
+          </animated.div>
         </>
       )}
       <Box

@@ -1,6 +1,6 @@
 import "./Register.scss";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import GoogleIcon from "@mui/icons-material/Google";
 import { createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
@@ -11,8 +11,11 @@ import { Link, useNavigate } from "react-router-dom";
 import loader from "../../assets/greenLoader.gif";
 import { Typography } from "@mui/material";
 import defaultImage from "../../assets/a.png";
+import Tick from "@mui/icons-material/FileDownloadDone";
 
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
+import { useInView, useSpring, animated } from "@react-spring/web";
 
 import ReactLoading from "react-loading";
 
@@ -21,6 +24,15 @@ function Register() {
 
   const [loading, setLoading] = useState(false);
 
+  const [show, setShow] = useState(false);
+
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 500);
+  }, []);
   const registerUserWithGoogle = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -64,6 +76,11 @@ function Register() {
     await setDoc(doc(db, "userChats", googleData.uid), {});
 
     navigate("/");
+  };
+
+  const handleImage = (e) => {
+    setImage(true);
+    console.log(e.target.files[0], "file");
   };
 
   const onSubmit = async (data) => {
@@ -116,10 +133,17 @@ function Register() {
       setLoading(false);
     }
   };
-
+  const styles = useSpring({
+    scale: show ? 1 : 0,
+    config: {
+      mass: 2,
+      tension: 150,
+      friction: 40,
+    },
+  });
   return (
     <div className="register">
-      <div className="card">
+      <animated.div style={styles} className="card">
         <div className="left">
           <h1>Connect with Devs...</h1>
           <p>
@@ -202,17 +226,28 @@ function Register() {
               </p>
             )}
             <label htmlFor="pfp">
-              <AddPhotoAlternateIcon
-                sx={{
-                  color: "#555",
-                }}
-              />
-              Select an Avatar
+              {!image && (
+                <AddPhotoAlternateIcon
+                  sx={{
+                    color: "#555",
+                  }}
+                />
+              )}
+              {image && (
+                <Tick
+                  sx={{
+                    color: "green",
+                  }}
+                />
+              )}
+              {!image && "Select an Avatar"}
+              {image && "Selected"}
             </label>
             <input
               type="file"
               name="pfp"
               id="pfp"
+              onChangeCapture={handleImage}
               {...register("pfp")}
               accept="image/*"
               {...register("pfp", { required: true })}
@@ -244,7 +279,7 @@ function Register() {
             Google <GoogleIcon sx={{ height: "16px" }}></GoogleIcon>
           </button>
         </div>
-      </div>
+      </animated.div>
     </div>
   );
 }

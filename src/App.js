@@ -26,6 +26,11 @@ function App() {
     else return children;
   };
 
+  const RestrictedRoute = ({ children }) => {
+    if (currentUser) return <Navigate to="/" />;
+    else return children;
+  };
+
   const [Image, setImage] = useState(null);
   const uploadImage = () => {
     if (Image) {
@@ -108,7 +113,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="login" element={<Login />} />
+            <Route
+              path="login"
+              element={
+                <RestrictedRoute>
+                  <Login />
+                </RestrictedRoute>
+              }
+            />
             <Route
               path="profile"
               element={
@@ -117,8 +129,22 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="register" element={<Register />} />
-            <Route path="/welcome" element={<DefaultPage />}></Route>
+            <Route
+              path="register"
+              element={
+                <RestrictedRoute>
+                  <Register />
+                </RestrictedRoute>
+              }
+            />
+            <Route
+              path="/welcome"
+              element={
+                <RestrictedRoute>
+                  <DefaultPage />
+                </RestrictedRoute>
+              }
+            ></Route>
           </Route>
         </Routes>
       </BrowserRouter>

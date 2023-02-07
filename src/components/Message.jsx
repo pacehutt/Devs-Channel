@@ -6,6 +6,8 @@ import { ChatContext } from "../context/ChatContext";
 
 import Backdrop from "@mui/material/Backdrop";
 
+import { useInView, useSpring, animated } from "@react-spring/web";
+
 const Message = ({ message }) => {
   const currentUser = useContext(AuthContext);
   const { data } = useContext(ChatContext);
@@ -31,12 +33,23 @@ const Message = ({ message }) => {
       sm: "98%",
       md: "60%",
     },
+    height: {
+      xs: "auto",
+      sm: "auto",
+      md: "80%",
+    },
     bgcolor: "transparent",
     boxShadow: 24,
     border: "none",
     outline: "none",
     p: 1,
   };
+
+  const [click, setClick] = useState(false);
+  const messageStyles = useSpring({
+    scale: click ? 1.1 : 1,
+    shadow: click ? 0 : 15,
+  });
 
   useEffect(() => {
     ref.current.scrollIntoView({ behavior: "smooth" });
@@ -96,12 +109,16 @@ const Message = ({ message }) => {
           })}
         </span>
       </div>
-      <div className="messageContent">
+      <animated.div
+        style={messageStyles}
+        className="messageContent"
+        onClick={() => setClick((prev) => !prev)}
+      >
         {message.text?.length !== 0 && <p>{message.text}</p>}
         {message.img && (
           <img src={message.img} alt="" onClick={handleImageClick} />
         )}
-      </div>
+      </animated.div>
     </div>
   );
 };

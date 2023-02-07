@@ -5,16 +5,9 @@ import { AuthContextProvider } from "./context/AuthContext";
 import { ChatContextProvider } from "./context/ChatContext";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-
-
-
-<ChatContextProvider>
-
-  <AuthContextProvider>
-    <React.StrictMode>
-     
-        <App />
-    </React.StrictMode>
-  </AuthContextProvider>
-</ChatContextProvider>
+  <ChatContextProvider>
+    <AuthContextProvider>
+      <App />
+    </AuthContextProvider>
+  </ChatContextProvider>
 );

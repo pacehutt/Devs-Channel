@@ -22,13 +22,33 @@ import ReactLoading from "react-loading";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import loader from "../../assets/pinkLoader.gif";
+
+import { useInView, useSpring, animated } from "@react-spring/web";
+
 function Login() {
   const [err, setErr] = useState("");
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 500);
+  }, []);
+
   const themeColor = "#F56A4D";
+
+  const styles = useSpring({
+    scale: show ? 1 : 0,
+    config: {
+      mass: 2,
+      tension: 150,
+      friction: 40,
+    },
+  });
 
   const {
     register,
@@ -71,7 +91,7 @@ function Login() {
   };
   return (
     <div className="login">
-      <div className="card">
+      <animated.div style={styles} className="card">
         <div className="left">
           <h1>Greetings Dev</h1>
           <p>
@@ -131,7 +151,7 @@ function Login() {
             Google <GoogleIcon sx={{ height: "16px" }}></GoogleIcon>
           </button>
         </div>
-      </div>
+      </animated.div>
     </div>
   );
 }

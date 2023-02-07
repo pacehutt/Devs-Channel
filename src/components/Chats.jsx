@@ -8,6 +8,8 @@ import { db } from "../firebase";
 import ReactLoading from "react-loading";
 import { Box, Typography } from "@mui/material";
 
+import { useInView, useSpring, animated } from "@react-spring/web";
+
 const Chats = () => {
   const [chats, setChats] = useState(null);
   const currentUser = useContext(AuthContext);
@@ -19,8 +21,18 @@ const Chats = () => {
     navigate("/chat");
   };
 
+  const [show, setShow] = useState(false);
+
+  const styles = useSpring({
+    opacity: show ? 1 : 0,
+    y: show ? 0 : 20,
+  });
+
+  useEffect(() => {}, []);
+
   useEffect(() => {
     const getChats = () => {
+      setShow((prev) => !prev);
       const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
         if (doc.exists()) setChats(Object.entries(doc.data()));
       });
@@ -39,7 +51,7 @@ const Chats = () => {
   //  console.log(Object.entries(chats))
   return (
     <div className="chats">
-      <div className="usersChat">
+      <animated.div style={styles} className="usersChat">
         {chats?.length === 0 && (
           <Box width={"100%"} margin="1rem 0">
             <Typography textAlign={"center"} fontSize={"12px"} color="white">
@@ -108,7 +120,7 @@ const Chats = () => {
                 </span>
               </div>
             ))}
-      </div>
+      </animated.div>
     </div>
   );
 };

@@ -8,8 +8,16 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link } from "react-router-dom";
 
+import { animated, useSpring } from "@react-spring/web";
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+
+  const styles = useSpring({
+    opacity: open ? 1 : 0,
+    y: open ? 0 : 24,
+    shadow: open ? 24 : 0,
+  });
 
   const currentUser = useContext(AuthContext);
   return (
@@ -28,7 +36,7 @@ const Navbar = () => {
         </div>
       </div>
       {open && (
-        <div className="nav-options">
+        <animated.div style={styles} className="nav-options">
           <ul>
             <li>
               <HomeIcon fontSize="14px"></HomeIcon>
@@ -58,7 +66,7 @@ const Navbar = () => {
               Logout
             </li>
           </ul>
-        </div>
+        </animated.div>
       )}
     </>
   );

@@ -11,7 +11,7 @@ import {
   Modal,
   Typography,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 
 import { auth, db } from "../../firebase";
@@ -28,6 +28,8 @@ import Backdrop from "@mui/material/Backdrop";
 
 import ReactLoading from "react-loading";
 
+import { animated, useSpring } from "@react-spring/web";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -35,6 +37,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Profile = () => {
   const navigate = useNavigate();
 
+  const [isVisible, setIsVisible] = useState(false);
   const currentUser = useContext(AuthContext);
 
   const [open, setOpen] = React.useState(false);
@@ -102,6 +105,15 @@ const Profile = () => {
     outline: "none",
     p: 5,
   };
+
+  const styles = useSpring({
+    opacity: isVisible ? 1 : 0,
+    y: isVisible ? 0 : 24,
+  });
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
   return (
     <div className="home">
@@ -204,138 +216,140 @@ const Profile = () => {
             </Typography>
           </Box>
 
-          <Box>
-            <Grid
-              container
-              spacing={2}
-              flexDirection={{
-                xs: "column",
-                sm: "column",
-                md: "row",
-              }}
-              alignItems={{
-                xs: "center",
-                sm: "center",
-                md: "center",
-              }}
-              justifyContent={{
-                xs: "center",
-                sm: "center",
-                md: "flex-start",
-              }}
-              sx={{
-                marginTop: "1rem",
-                padding: "0 1rem",
-              }}
-            >
-              <Grid item>
-                <Box
-                  sx={{
-                    width: "100px",
-                    height: "100px",
-                    borderRadius: "30px",
-                  }}
-                >
-                  <img
-                    src={currentUser?.photoURL}
-                    // src={"https://byuc.files.wordpress.com/2012/07/avat-2.jpg"}
-                    alt=""
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "50px",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Box>
-              </Grid>
-
+          <animated.div style={styles}>
+            <Box>
               <Grid
-                item
+                container
+                spacing={2}
+                flexDirection={{
+                  xs: "column",
+                  sm: "column",
+                  md: "row",
+                }}
+                alignItems={{
+                  xs: "center",
+                  sm: "center",
+                  md: "center",
+                }}
+                justifyContent={{
+                  xs: "center",
+                  sm: "center",
+                  md: "flex-start",
+                }}
                 sx={{
-                  color: "white",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: {
-                    xs: "center",
-                    sm: "center",
-                    md: "flex-start",
-                  },
+                  marginTop: "1rem",
+                  padding: "0 1rem",
                 }}
               >
-                <Box>
-                  <Typography
-                    variant="button"
-                    fontSize={"16px"}
+                <Grid item>
+                  <Box
                     sx={{
-                      textAlign: {
-                        xs: "center",
-                        sm: "center",
-                        md: "left",
-                      },
+                      width: "100px",
+                      height: "100px",
+                      borderRadius: "30px",
                     }}
                   >
-                    {currentUser.displayName}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography
-                    variant="body"
-                    fontSize={"16px"}
-                    sx={{
-                      textAlign: {
-                        xs: "center",
-                        sm: "center",
-                        md: "left",
-                      },
-                    }}
-                  >
-                    {currentUser.email}
-                  </Typography>
-                </Box>
+                    <img
+                      src={currentUser?.photoURL}
+                      // src={"https://byuc.files.wordpress.com/2012/07/avat-2.jpg"}
+                      alt=""
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "50px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Box>
+                </Grid>
 
-                <Button
-                  variant="contained"
-                  sx={{ marginTop: "1rem" }}
-                  onClick={() => {
-                    auth.signOut();
-                    navigate("/login");
+                <Grid
+                  item
+                  sx={{
+                    color: "white",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: {
+                      xs: "center",
+                      sm: "center",
+                      md: "flex-start",
+                    },
                   }}
                 >
-                  Logout
-                </Button>
+                  <Box>
+                    <Typography
+                      variant="button"
+                      fontSize={"16px"}
+                      sx={{
+                        textAlign: {
+                          xs: "center",
+                          sm: "center",
+                          md: "left",
+                        },
+                      }}
+                    >
+                      {currentUser.displayName}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant="body"
+                      fontSize={"16px"}
+                      sx={{
+                        textAlign: {
+                          xs: "center",
+                          sm: "center",
+                          md: "left",
+                        },
+                      }}
+                    >
+                      {currentUser.email}
+                    </Typography>
+                  </Box>
+
+                  <Button
+                    variant="contained"
+                    sx={{ marginTop: "1rem" }}
+                    onClick={() => {
+                      auth.signOut();
+                      navigate("/login");
+                    }}
+                  >
+                    Logout
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
-          <Box
-            sx={{
-              padding: "1rem",
-              width: "95%",
-              display: "flex",
-              justifyContent: {
-                xs: "center",
-                sm: "center",
-                md: "flex-end",
-              },
-              marginTop: "1rem",
-              // paddingRight: "1rem",
-            }}
-          >
-            <Button
-              variant="contained"
+            </Box>
+            <Box
               sx={{
-                backgroundColor: "#A30101",
-                fontSize: "12px",
-                "&:hover": {
-                  backgroundColor: "#BE202F",
+                padding: "1rem",
+                width: "95%",
+                display: "flex",
+                justifyContent: {
+                  xs: "center",
+                  sm: "center",
+                  md: "flex-end",
                 },
+                marginTop: "1rem",
+                // paddingRight: "1rem",
               }}
-              onClick={handleClickOpen}
             >
-              Delete My Account
-            </Button>
-          </Box>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#A30101",
+                  fontSize: "12px",
+                  "&:hover": {
+                    backgroundColor: "#BE202F",
+                  },
+                }}
+                onClick={handleClickOpen}
+              >
+                Delete My Account
+              </Button>
+            </Box>
+          </animated.div>
         </Box>
       </Box>
     </div>
